@@ -1,0 +1,101 @@
+generated: '2026-08-05'
+method: searched
+source: https://global.rokid.com/llms.txt
+status: live
+notes: >-
+  Rokid runs a real, publicly addressable MCP server on its own host as part of
+  the Universal Commerce Protocol (UCP) implementation on its global storefront.
+  It is a COMMERCE MCP server, not a developer-platform one — it exposes the
+  Rokid store catalog, cart and checkout to buying agents. Rokid's enterprise
+  developer platform (api.rokid.com) has no MCP surface.
+servers:
+- name: Rokid Store — UCP Shopping MCP
+  url: https://global.rokid.com/api/ucp/mcp
+  canonical_url: https://store-rokid.myshopify.com/api/ucp/mcp
+  transport: streamable-http
+  protocol: mcp
+  hosted_by: Shopify (UCP native)
+  auth: >-
+    Anonymous JSON-RPC POST is accepted but a UCP agent profile URI is required
+    before any method executes. tools/list and initialize both returned HTTP 422
+    with JSON-RPC error -32001 "UCP discovery failed" / code invalid_profile_url
+    / "Unable to fetch agent profile: Missing profile uri". The live inputSchema
+    set is therefore gated behind agent-profile registration.
+  discovery: https://global.rokid.com/.well-known/ucp
+  ucp_versions:
+  - '2026-04-08'
+  - '2026-01-23'
+  tool_schema_reference: https://ucp.dev/2026-04-08/services/shopping/mcp.openrpc.json
+  x-evidence:
+    fetched: '2026-08-05'
+    probes:
+    - url: https://global.rokid.com/api/ucp/mcp
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+      http_status: 422
+      jsonrpc_error: -32001 UCP discovery failed (invalid_profile_url)
+    - url: https://global.rokid.com/api/ucp/mcp
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"initialize", ...}'
+      http_status: 422
+      jsonrpc_error: -32001 UCP discovery failed (invalid_profile_url)
+    - url: https://store-rokid.myshopify.com/api/ucp/mcp
+      method: POST
+      http_status: 422
+      jsonrpc_error: -32001 UCP discovery failed (invalid_profile_url)
+    - url: https://global.rokid.com/.well-known/ucp
+      method: GET
+      http_status: 200
+      content_type: application/json
+  tools:
+    method: searched
+    source: https://global.rokid.com/llms.txt
+    note: >-
+      Names below are published by Rokid in its own llms.txt / agents.md agent
+      flow. Input schemas were NOT retrieved — the live tools/list is gated (422
+      above) — and are not reproduced here. Authoritative schemas live in the
+      UCP shopping OpenRPC document referenced above.
+    list:
+    - name: search_catalog
+      capability: dev.ucp.shopping.catalog.search
+      purpose: Find products matching the buyer's intent.
+    - name: create_cart
+      capability: dev.ucp.shopping.cart
+      purpose: Add desired items to a cart.
+    - name: create_checkout
+      capability: dev.ucp.shopping.checkout
+      purpose: Start the purchase flow.
+    - name: update_checkout
+      capability: dev.ucp.shopping.fulfillment
+      purpose: Set shipping address and method.
+    - name: complete_checkout
+      capability: dev.ucp.shopping.checkout
+      purpose: Finalize the purchase. Buyer must approve payment.
+  capabilities_advertised:
+  - dev.ucp.shopping.cart
+  - dev.ucp.shopping.checkout
+  - dev.ucp.shopping.fulfillment
+  - dev.ucp.shopping.discount
+  - dev.ucp.shopping.order
+  - dev.ucp.shopping.catalog.search
+  - dev.ucp.shopping.catalog.lookup
+  - dev.shopify.catalog
+  payment_handlers:
+  - com.google.pay
+  - dev.shopify.card
+  agent_rules_published_by_provider:
+  - Checkout requires contemporaneous human approval; agents must not complete
+    payment without explicit buyer consent.
+  - The MCP endpoint is rate-limited per IP; back off on 429.
+  - Pass context.address_country and context.currency for accurate pricing.
+not_found:
+- surface: developer-platform MCP server
+  note: >-
+    No MCP endpoint is documented or discoverable for the Rokid Sprite
+    Enterprise OpenAPI (api.rokid.com). The docs' only agent-integration page
+    ("Integrate OpenClaw") describes a LAN-local OpenAI-compatible REST adapter
+    at http://<LAN_IP>:18789/v1/chat/completions on the glasses, not an MCP
+    server.
+  evidence:
+  - url: https://x-docs.rokid.com/docs/en/openapi/%E6%8E%A5%E5%85%A5OpenClaw.html
+    http_status: 200

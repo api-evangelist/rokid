@@ -1,0 +1,37 @@
+generated: '2026-08-05'
+method: searched
+source: https://github.com/Rokid
+notes: >-
+  Protobuf definitions published verbatim in Rokid's own GitHub organization.
+  These are proto2 message definitions for the wire formats of the Rokid open
+  platform — they carry no gRPC `service` blocks, so they define payloads
+  rather than RPC services.
+protos:
+- file: grpc/rokid-skill.proto
+  package: rokid.open.v1.skill.dispatch
+  syntax: proto2
+  repo: https://github.com/Rokid/openapi-protobuf
+  source: https://raw.githubusercontent.com/Rokid/openapi-protobuf/master/open/v1/skill/skill.proto
+  http_status: 200
+  bytes: 692
+  description: >-
+    Skill dispatch messages for the Rokid open platform — SendEvent,
+    SetConfirm and SetPickup request/response pairs keyed by appId.
+- file: grpc/rokid-openvoice-asr.proto
+  package: rokid.open.v1.asr.AsrProxy
+  syntax: proto2
+  repo: https://github.com/Rokid/rokid-openvoice-http
+  source: https://raw.githubusercontent.com/Rokid/rokid-openvoice-http/master/protobuf/asr.proto
+  http_status: 200
+  bytes: 287
+  description: Automatic speech recognition request/response wire format for the
+    Rokid OpenVoice HTTP open interface.
+- file: grpc/rokid-openvoice-tts.proto
+  package: rokid.open.v1.tts.TtsProxy
+  syntax: proto2
+  repo: https://github.com/Rokid/rokid-openvoice-http
+  source: https://raw.githubusercontent.com/Rokid/rokid-openvoice-http/master/protobuf/tts.proto
+  http_status: 200
+  bytes: 314
+  description: Text-to-speech request/response wire format for the Rokid OpenVoice
+    HTTP open interface.

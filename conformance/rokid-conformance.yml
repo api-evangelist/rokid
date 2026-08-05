@@ -1,0 +1,131 @@
+generated: '2026-08-05'
+method: probed
+source: https://global.rokid.com/.well-known/ucp
+notes: >-
+  Standards conformance asserted only where a document Rokid serves from its own
+  host declares it, or where a live probe demonstrated it. Rokid's strongest
+  conformance is on the COMMERCE side (UCP + MCP on the global storefront); its
+  developer platform conforms to almost nothing machine-readable.
+standards:
+- id: ucp
+  name: Universal Commerce Protocol
+  conforms: true
+  versions:
+  - '2026-04-08'
+  - '2026-01-23'
+  evidence: >-
+    https://global.rokid.com/.well-known/ucp returns 200 application/json with a
+    full merchant profile declaring services, capabilities and payment handlers.
+  capabilities:
+  - dev.ucp.shopping.cart
+  - dev.ucp.shopping.checkout
+  - dev.ucp.shopping.fulfillment
+  - dev.ucp.shopping.discount
+  - dev.ucp.shopping.order
+  - dev.ucp.shopping.catalog.search
+  - dev.ucp.shopping.catalog.lookup
+  - dev.shopify.catalog
+  x-evidence:
+    url: https://global.rokid.com/.well-known/ucp
+    http_status: 200
+    fetched: '2026-08-05'
+- id: mcp
+  name: Model Context Protocol
+  conforms: true
+  transport: streamable-http
+  evidence: >-
+    https://global.rokid.com/api/ucp/mcp answers JSON-RPC 2.0 with a
+    well-formed MCP error object. tools/list is gated on a UCP agent profile
+    (HTTP 422, JSON-RPC -32001), so the tool schemas were not retrieved.
+  gated: true
+  x-evidence:
+    url: https://global.rokid.com/api/ucp/mcp
+    http_status: 422
+    fetched: '2026-08-05'
+- id: llmstxt
+  name: llms.txt
+  conforms: true
+  evidence: https://global.rokid.com/llms.txt returns 200 text/markdown, mirrored
+    at /agents.md.
+  x-evidence:
+    url: https://global.rokid.com/llms.txt
+    http_status: 200
+    fetched: '2026-08-05'
+- id: oidc
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  scope: storefront customer accounts only, not the developer API
+  issuer: https://shopify.com/authentication/62856364211
+  evidence: https://global.rokid.com/.well-known/openid-configuration returns a
+    complete discovery document (RS256, PKCE S256, authorization_code + refresh).
+  x-evidence:
+    url: https://global.rokid.com/.well-known/openid-configuration
+    http_status: 200
+    fetched: '2026-08-05'
+- id: rfc8414
+  name: OAuth 2.0 Authorization Server Metadata
+  conforms: true
+  scope: storefront customer accounts only
+  evidence: >-
+    https://global.rokid.com/.well-known/oauth-authorization-server returns a
+    metadata document byte-identical to the OIDC discovery document.
+  x-evidence:
+    url: https://global.rokid.com/.well-known/oauth-authorization-server
+    http_status: 200
+    fetched: '2026-08-05'
+- id: openapi
+  name: OpenAPI Specification
+  conforms: false
+  evidence: >-
+    No OpenAPI or Swagger document is published. /openapi.json, /openapi.yaml,
+    /swagger.json, /v1/openapi.json, /api-docs and /v2/api-docs were probed on
+    ar.rokid.com, open.rokid.com, developerdoc.rokid.com, x-docs.rokid.com,
+    api.rokid.com and openapi.rokid.com. The docs hosts answer 200 with an
+    identical SPA HTML shell for every path (confirmed against a nonsense-path
+    control probe); api.rokid.com 404s; openapi.rokid.com 401s. Rokid calls its
+    REST reference "OpenAPI" as a product name — it is a hand-written HTML
+    reference, not an OpenAPI document.
+- id: asyncapi
+  name: AsyncAPI
+  conforms: false
+  evidence: No event, streaming or webhook contract is published. Message delivery
+    is push-to-device, not callback-to-integrator.
+- id: rfc9457
+  name: 'RFC 9457: Problem Details for HTTP APIs'
+  conforms: false
+  evidence: >-
+    Errors use a proprietary {code, message, data, success} envelope returned
+    with HTTP 200. Observed live at api.rokid.com.
+- id: rfc9116
+  name: 'RFC 9116: security.txt'
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on global.rokid.com,
+    www.rokid.com and api.rokid.com.
+- id: rfc8594
+  name: 'RFC 8594: Sunset HTTP Header'
+  conforms: false
+  evidence: No Sunset or Deprecation headers or policy are documented.
+- id: a2a
+  name: A2A Agent Card
+  conforms: false
+  evidence: >-
+    /.well-known/agent-card.json and /.well-known/agent.json return 404 on
+    global.rokid.com and api.rokid.com. The 200s on ar./open./developerdoc./
+    x-docs.rokid.com are the SPA HTML catch-all, not agent cards, and were
+    rejected.
+- id: oauth2
+  name: OAuth 2.0 (developer API)
+  conforms: false
+  evidence: >-
+    The Sprite Enterprise OpenAPI uses a long-lived bearer API key with no token
+    endpoint, no refresh flow and no scopes.
+- id: idempotency
+  name: Idempotency-Key (draft-ietf-httpapi-idempotency-key-header)
+  conforms: false
+  evidence: No idempotency key or retry-safety contract is documented.
+compliance_certifications:
+  published: false
+  note: >-
+    No trust center, SOC 2, ISO 27001, PCI or other certification page was found
+    on any Rokid host. Absence of a published certification is not a statement
+    about Rokid's internal security posture — only about what is discoverable.

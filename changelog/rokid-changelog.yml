@@ -1,0 +1,99 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/%E7%89%88%E6%9C%AC%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97.html
+docs: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/%E7%89%88%E6%9C%AC%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97.html
+notes: >-
+  Rokid publishes a dated, per-release changelog for the Glass3 Enterprise
+  terminal SDKs (phone + glasses), entry by entry, naming the exact classes,
+  interfaces and methods added or changed. It is an SDK changelog, not a cloud
+  API changelog — the api.rokid.com OpenAPI has no separate dated change log.
+scheme:
+  style: semver-with-channel-suffix
+  pattern: V<major>.<minor>.<patch>-<channel>(<YYYY-M-D>)
+  channels:
+    E: enterprise
+    P: production/partner (the channel the maven.rokid.com releases carry)
+  note: >-
+    Phone SDK and glasses SDK are versioned in lockstep and released together;
+    each entry also names the recommended device OTA build.
+current_version:
+  documented_latest: V2.1.9-E
+  documented_latest_date: '2026-05-25'
+  skill_package_reports: V2.2.0-E(2026-6-5)
+  maven_latest_release: 2.5.1-P
+  maven_latest_snapshot: 2.6.3-P-SNAPSHOT
+  discrepancy: >-
+    The published changelog page stops at V2.1.9-E (2026-05-25) while the
+    provider's own Maven repository has shipped through 2.5.1-P and snapshots to
+    2.6.3-P (last updated 2026-08-04) — roughly four minor releases are in
+    distribution ahead of the public change log.
+entries:
+- version: V2.1.9-E
+  date: '2026-05-25'
+  phone_sdk: com.rokid.security:phone.sdk:2.1.9-E
+  glasses_sdk: com.rokid.security:glass3.open.sdk:2.1.9-E
+  recommended_ota: 1.17.e002-20260509-150201 or later
+  breaking: false
+  highlights:
+  - Glasses SDK event-interception APIs — GlassSdk.setPrimaryEventListener() and
+    GlassSdk.registerLeqiInterceptor()/unregisterLeqiInterceptor() for foreground
+    voice-command interception.
+  - CameraShareHelper configuration switching.
+  - New status-query APIs.
+- version: V2.1.8-E
+  date: '2026-05-09'
+  breaking: false
+  highlights:
+  - Wi-Fi P2P H.264 decode control on the phone SDK (core change) with a new
+    GlassVideoStreamParam data class and an IDevice interface extension.
+  - Glasses SDK additions across GlassSdk.kt, CameraShareHelper.kt,
+    IDeviceService.aidl, IMediaServer.aidl, ICameraSurfaceCallback.aidl and
+    ICameraShareCallback.aidl.
+- version: V2.1.7-E
+  date: '2026-04-07'
+  breaking: false
+  highlights:
+  - Phone SDK AR recording API added.
+  - Four new IMediaServer APIs plus an IMediaServer parameter addition on the
+    glasses SDK.
+- version: V2.1.5-E
+  date: '2026-02-05'
+  breaking: false
+  highlights:
+  - IBTRingClientListener gains a method (phone SDK).
+  - IDeviceService gains a method (glasses SDK).
+- version: V2.1.04-E
+  date: '2026-01-16'
+  breaking: false
+  highlights:
+  - New features plus method additions on IDevice and IFileOperate; IBluetoothRing
+    method change (phone SDK).
+  - ICommonInfoListener addition and PreviewResolution for video-file resolution
+    during recording (glasses SDK).
+- version: v2.1.2
+  date: '2025-12-15'
+  breaking: false
+  highlights:
+  - IWifiP2PClientOperate and IAIChat method additions (phone SDK).
+  - New ICollectService and IOfflineTtsService interfaces, GlassSdk service getter
+    methods, IMediaServer listener management, and face-recognition result
+    reporting on IOfflineRecServer (glasses SDK).
+other_changelogs:
+- name: RokidMirror version history
+  url: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/RokidMirror%E7%89%88%E6%9C%AC%E8%AE%B0%E5%BD%95.html
+  scope: wireless screen-projection desktop app
+- name: Rokid Glass 2 SDK release notes
+  url: https://github.com/RokidGlass/glass2-docs
+  scope: previous-generation glasses SDK (face, LPR, voice, UI, record, IMU),
+    per-SDK ReleaseNotes.md files
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/%E7%89%88%E6%9C%AC%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97.html
+    http_status: 200
+    bytes: 635200
+  - url: https://x-docs.rokid.com/docs/skills/version.json
+    http_status: 200
+    note: reports changelogVersion V2.2.0-E(2026-6-5)
+  - url: https://maven.rokid.com/repository/maven-public/com/rokid/security/glass3.open.sdk/maven-metadata.xml
+    http_status: 200

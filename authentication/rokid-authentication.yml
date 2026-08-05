@@ -1,0 +1,102 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/openapi/ApiKey.html
+docs: https://x-docs.rokid.com/docs/en/openapi/ApiKey.html
+notes: >-
+  Derived nothing from an OpenAPI — Rokid publishes no machine-readable spec.
+  Every field below was read from the provider's own published API-key page and
+  request examples, and the unauthenticated failure mode was confirmed by a live
+  probe against api.rokid.com.
+apis:
+- name: Rokid Sprite Enterprise OpenAPI
+  base_url: https://api.rokid.com
+  security_schemes:
+  - id: apiKeyBearer
+    type: http
+    scheme: bearer
+    in: header
+    header: Authorization
+    format: 'Bearer <API_KEY>'
+    description: >-
+      A long-lived enterprise API key presented as an HTTP bearer credential.
+      It is not an OAuth access token — there is no token endpoint, no refresh
+      flow and no scope parameter.
+    required_headers:
+      Content-Type: application/json
+    issuance:
+      self_service: false
+      process: >-
+        Contact the Rokid sales/business team for OA approval to obtain an
+        enterprise account and API key. There is no developer-portal signup that
+        mints a key.
+      console: https://x-inspection.rokid.com/main/devices
+    lifetime:
+      default_validity: 1 month
+      configurable_at_provisioning: true
+      revocation: >-
+        Keys become invalid if the enterprise account is deregistered. No
+        self-service rotation endpoint is documented.
+    published_guidance:
+    - Prefer one key per app or service to limit blast radius if a key leaks.
+    scopes: none
+    note_on_scopes: >-
+      No scope, permission or role model is documented. A key is all-or-nothing
+      across the device, message, agent, remote-collaboration and AI-work-assistant
+      endpoint families.
+  unauthenticated_behavior:
+    http_status: 200
+    body: '{"code":50001,"message":"Authorization 不能为空","success":false}'
+    note: >-
+      A missing Authorization header returns HTTP 200 with an in-body error
+      envelope rather than 401. Clients MUST inspect `success`/`code`, not the
+      HTTP status. See errors/rokid-error-codes.yml.
+    evidence:
+      url: https://api.rokid.com/ar/core/openapi/device/list
+      method: POST
+      http_status: 200
+      fetched: '2026-08-05'
+  gateway_probe:
+    host: openapi.rokid.com
+    result: >-
+      A second API host exists at openapi.rokid.com. Every path — including
+      /openapi.json and /.well-known/* — returns HTTP 401 application/json
+      ("没有权限" / no permission) from a Spring-style error envelope. Nothing
+      anonymous is served from it.
+    evidence:
+      url: https://openapi.rokid.com/
+      http_status: 401
+      fetched: '2026-08-05'
+- name: Rokid Global Store — customer accounts (OIDC)
+  base_url: https://global.rokid.com
+  security_schemes:
+  - id: shopifyCustomerAccounts
+    type: openIdConnect
+    openIdConnectUrl: https://global.rokid.com/.well-known/openid-configuration
+    issuer: https://shopify.com/authentication/62856364211
+    authorization_endpoint: https://shopify.com/authentication/62856364211/oauth/authorize
+    token_endpoint: https://shopify.com/authentication/62856364211/oauth/token
+    jwks_uri: https://shopify.com/authentication/62856364211/.well-known/jwks.json
+    grant_types:
+    - authorization_code
+    - refresh_token
+    - urn:ietf:params:oauth:grant-type:jwt-bearer
+    pkce: S256
+    token_endpoint_auth_methods:
+    - client_secret_basic
+    id_token_signing_alg:
+    - RS256
+    scopes:
+    - openid
+    - email
+    - customer-account-api:full
+    - customer-account-mcp-api:full
+    note: >-
+      This is the Shopify Customer Accounts issuer behind Rokid's global
+      storefront, discovered anonymously at the well-known path. It governs
+      shopper identity on global.rokid.com, NOT the enterprise developer API.
+    evidence:
+      url: https://global.rokid.com/.well-known/openid-configuration
+      http_status: 200
+      fetched: '2026-08-05'
+mutual_tls: not documented
+api_key_in_query: not supported

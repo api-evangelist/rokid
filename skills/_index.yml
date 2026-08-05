@@ -1,0 +1,62 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/AI%E5%BC%80%E5%8F%91%E5%8A%A9%E6%89%8BSkill.html
+notes: >-
+  Rokid publishes its own packaged Agent Skill for the Glass3 Enterprise SDK.
+  The SKILL.md below is saved VERBATIM from the provider's distributed zip; it
+  was not authored or paraphrased by API Evangelist. The full package (22 MB)
+  bundles the SDK docs, product manual, FAQ and demo index under references/.
+skills:
+- name: rokid-glass3-sdk
+  file: skills/rokid-glass3-sdk.md
+  title: Rokid Glass3 SDK Developer Skill
+  description: >-
+    Use when helping developers integrate Rokid Glass3 Enterprise SDK, configure
+    phone or glasses SDK dependencies, use Demo code, answer API questions,
+    troubleshoot Bluetooth/P2P issues, or find code samples.
+  publisher: Rokid
+  official: true
+  method: searched
+  format: SKILL.md (frontmatter + markdown, references/ bundle)
+  package:
+    url: https://x-docs.rokid.com/docs/skills/rokid-glass3-sdk-skill.zip
+    content_type: application/zip
+    bytes: 22098912
+    http_status: 200
+  version_metadata:
+    url: https://x-docs.rokid.com/docs/skills/version.json
+    file: skills/rokid-glass3-sdk-version.json
+    http_status: 200
+  version:
+    docs_version: dev
+    changelog_entry: V2.2.0-E(2026-6-5)
+    glasses_sdk: com.rokid.security:glass3.open.sdk:2.2.0-E
+    phone_sdk: com.rokid.security:phone.sdk:2.2.0-E
+    source_doc_count: 148
+  bundle_contents:
+  - SKILL.md
+  - references/docs/
+  - references/product-manual.md
+  - references/demo-code-index.md
+  - references/version.json
+  - references/evaluation-prompts.md
+  - scripts/fetch-demo-repo.sh
+  excluded_by_publisher:
+  - internal materials
+  - unpublished APIs
+  - local project source code / local development paths
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/AI%E5%BC%80%E5%8F%91%E5%8A%A9%E6%89%8BSkill.html
+    http_status: 200
+  - url: https://x-docs.rokid.com/docs/skills/version.json
+    http_status: 200
+    content_type: application/json
+  - url: https://x-docs.rokid.com/docs/skills/rokid-glass3-sdk-skill.zip
+    http_status: 200
+    content_type: application/zip
+  - url: https://x-docs.rokid.com/docs/en/skills/version.json
+    http_status: 404
+    note: the docs-relative path in the page resolves one level up; recorded so the
+      404 is not mistaken for absence

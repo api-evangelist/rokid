@@ -1,0 +1,35 @@
+syntax = "proto2";
+
+package rokid.open.v1.skill.dispatch;
+
+message SendEventRequest{
+    required string appId = 1;
+    required string event = 2;
+    required string extra = 3;
+}
+
+message SendEventResponse{
+    required string response = 1;
+}
+
+message SetConfirmRequest{
+   required string appId = 1;
+   required string confirmIntent = 2;
+   required string confirmSlot = 3;
+   repeated string confirmOptions = 4;
+   required string attributes = 5;
+}
+
+message SetConfirmResponse{
+  required  bool success = 1;
+  required string message = 2;
+}
+
+message SetPickupRequest{
+  required string appId = 1;
+}
+
+message SetPickupResponse{
+  required bool success = 1;
+  required string message = 2;
+}

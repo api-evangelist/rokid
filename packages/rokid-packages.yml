@@ -1,0 +1,130 @@
+generated: '2026-08-05'
+method: searched
+source: https://maven.rokid.com/repository/maven-public/com/rokid/security/
+notes: >-
+  Rokid distributes its current, actively-maintained Glass3 Enterprise SDKs from
+  its OWN Sonatype Nexus repository at maven.rokid.com — not from Maven Central
+  (a com.rokid* search there returns 0 artifacts). The npm packages below are
+  older first-party libraries from the YodaOS / RokidOS era, published under the
+  `rokid` npm account and mirrored in github.com/Rokid. There is no first-party
+  PyPI, NuGet, crates.io or Packagist package.
+registries_searched:
+- registry: maven.rokid.com (first-party Nexus)
+  result: hit
+- registry: npm
+  result: hit
+- registry: Maven Central
+  result: miss
+  evidence: 'https://search.maven.org/solrsearch/select?q=g:com.rokid* → numFound 0'
+- registry: PyPI
+  result: miss
+  evidence: https://pypi.org/pypi/rokid/json → 404
+- registry: CocoaPods
+  result: private spec repo only
+  evidence: https://github.com/Rokid/Cocoapods-Specs → 200 (Rokid's own CocoaPods
+    Specifications repo; no public trunk pod)
+packages:
+- language: java
+  ecosystem: maven
+  registry: https://maven.rokid.com/repository/maven-public/
+  name: com.rokid.security:glass3.open.sdk
+  latest_release: 2.5.1-P
+  latest_snapshot: 2.6.3-P-SNAPSHOT
+  version_count: 38
+  last_updated: '2026-08-04'
+  official: true
+  description: >-
+    Glasses-side Rokid Glass3 Enterprise SDK — media capture, voice/ASR/TTS,
+    recognition, messaging and file transfer, device state, Bluetooth and Wi-Fi
+    P2P.
+  metadata_url: https://maven.rokid.com/repository/maven-public/com/rokid/security/glass3.open.sdk/maven-metadata.xml
+  http_status: 200
+- language: java
+  ecosystem: maven
+  registry: https://maven.rokid.com/repository/maven-public/
+  name: com.rokid.security:phone.sdk
+  latest_release: 2.5.1-P
+  latest_snapshot: 2.6.2-P-SNAPSHOT
+  version_count: 37
+  last_updated: '2026-07-08'
+  official: true
+  description: >-
+    Phone-side companion SDK — SDK init, Bluetooth/P2P pairing, message and file
+    transfer, device media, recognition, voice AI, OTA and provisioning.
+  metadata_url: https://maven.rokid.com/repository/maven-public/com/rokid/security/phone.sdk/maven-metadata.xml
+  http_status: 200
+- language: javascript
+  ecosystem: npm
+  name: rokid
+  version: 1.0.5
+  official: true
+  npm_maintainer: rokid
+  repository: https://github.com/Rokid/node-rokid
+  url: https://www.npmjs.com/package/rokid
+  description: Rokid Node.js SDK.
+  last_published: '2022-05-16'
+  status: legacy
+- language: javascript
+  ecosystem: npm
+  name: rokid-homebase-cli
+  version: 2.0.7
+  official: true
+  npm_maintainer: rokid
+  repository: https://github.com/Rokid/rokid-homebase-cli
+  url: https://www.npmjs.com/package/rokid-homebase-cli
+  description: Rokid Homebase command-line tool (smart-home driver development).
+  last_published: '2022-06-26'
+  status: legacy
+- language: javascript
+  ecosystem: npm
+  name: rokidos-cli
+  version: 0.10.2
+  official: true
+  npm_maintainer: yorkie
+  repository: gitlab.rokid-inc.com:roahos/roah-cli
+  mirror: https://github.com/Rokid/rokidos-cli
+  url: https://www.npmjs.com/package/rokidos-cli
+  description: Development CLI for ROL (Rokid Open Linux) — config, install, build,
+    test.
+  last_published: '2022-05-16'
+  status: legacy
+- language: javascript
+  ecosystem: npm
+  name: rokid-linux-cli
+  version: 0.1.0
+  official: true
+  npm_maintainer: yorkie
+  repository: gitlab.rokid-inc.com:roahos/roah-cli
+  url: https://www.npmjs.com/package/rokid-linux-cli
+  description: Earlier name for the ROL development CLI.
+  last_published: '2022-05-16'
+  status: legacy
+- language: javascript
+  ecosystem: npm
+  name: '@yodaos-pkg/create-aiui-agent'
+  version: 2.1.3
+  official: unverified
+  npm_maintainer: yorkiemakoto
+  url: https://www.npmjs.com/package/@yodaos-pkg/create-aiui-agent
+  description: Scaffold a new AIUI Agent project from the built-in template.
+  last_published: '2026-07-15'
+  note: >-
+    Published under the @yodaos-pkg scope (YodaOS is Rokid's operating system)
+    by the same maintainer identity as the first-party rokidos-cli packages, but
+    the package declares no repository or homepage linking it to Rokid, so
+    first-party status is recorded as unverified rather than asserted.
+source_code:
+- https://github.com/Rokid
+- https://github.com/RokidGlass
+demo_repository: https://gitee.com/as_pixar/glass3sdkdemo
+x-evidence:
+  fetched: '2026-08-05'
+  probes:
+  - url: https://maven.rokid.com/repository/maven-public/com/rokid/security/glass3.open.sdk/maven-metadata.xml
+    http_status: 200
+  - url: https://maven.rokid.com/repository/maven-public/com/rokid/security/phone.sdk/maven-metadata.xml
+    http_status: 200
+  - url: https://maven.rokid.com/repository/maven-public/com/rokid/security/zzz.control.sdk/maven-metadata.xml
+    http_status: 404
+    note: control probe — the Nexus browse UI answers 200 for any directory path,
+      so only maven-metadata.xml hits are recorded

@@ -1,0 +1,124 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/openapi/
+notes: >-
+  Cross-cutting semantics for the Rokid Sprite Enterprise OpenAPI
+  (https://api.rokid.com), read from the provider's five published reference
+  pages and confirmed against live probes. Nothing here is inferred from an
+  OpenAPI document — Rokid publishes none.
+authentication:
+  style: bearer-api-key
+  header: 'Authorization: Bearer <API_KEY>'
+  detail: authentication/rokid-authentication.yml
+  self_service: false
+idempotency:
+  supported: false
+  header: null
+  detail: >-
+    No idempotency key, request-id-based replay protection, or safe-retry
+    guidance is documented anywhere in the Rokid reference. Two of the seven
+    documented operations are POST reads (device/list, rtc/meeting/info/page)
+    which are naturally repeatable, but the write operation (push/messages) has
+    no documented deduplication contract.
+pagination:
+  style: page-number
+  request_params:
+  - name: pageNum
+    type: int
+    default: 1
+    location: query or body
+  - name: pageSize
+    type: int
+    default: 10
+    location: query or body
+  response_fields:
+  - pageNum
+  - pageSize
+  - total
+  - list
+  cursor_support: false
+  max_page_size: not documented
+  applies_to:
+  - GET /ar/assistant/openapi/chatLog/page
+  - POST /ar/corporation/openapi/rtc/meeting/info/page
+  - GET /ar/flow/openapi/record/page
+filtering:
+  style: substring-and-range
+  patterns:
+  - Substring/fuzzy match on name fields (deviceSn, deviceName, meetingName,
+    taskName, agentName, modelName, keywords).
+  - Exact match on identity fields (uid, companyId, id).
+  - Inclusive time windows via paired string params (startTime/endTime,
+    gmtStart/gmtEnd).
+date_time:
+  formats:
+  - 'yyyy-MM-dd'
+  - 'yyyy-MM-dd HH:mm:ss'
+  timezone: not documented (server responses observed with +0800 offsets)
+  transport: string, not ISO 8601 / RFC 3339
+field_naming:
+  case: lowerCamelCase
+  audit_fields:
+  - gmtCreated
+  - gmtModified
+  - deleted
+  note: gmt* / deleted are exposed persistence-layer fields rather than an
+    abstracted API surface.
+content_types:
+  request:
+  - application/json
+  - application/x-www-form-urlencoded
+  response:
+  - '*/*'
+  note: >-
+    The reference declares response content type as `*/*` on every operation;
+    live responses are application/json.
+error_envelope:
+  shape: '{code, message, data, success}'
+  http_status_on_error: 200
+  rfc9457: false
+  detail: errors/rokid-error-codes.yml
+versioning:
+  api_version_in_path: false
+  api_version_header: false
+  path_shape: /ar/<product>/openapi/<resource>/<action>
+  products_observed:
+  - core (device, message push)
+  - assistant (agent chat logs)
+  - corporation (remote collaboration / RTC)
+  - flow (AI work assistant)
+  note: >-
+    There is no API version segment. The versioned artifact is the SDK, not the
+    cloud contract — see changelog/rokid-changelog.yml.
+  detail: lifecycle/rokid-lifecycle.yml
+rate_limiting:
+  enterprise_api:
+    documented: false
+    headers: none documented
+  store_mcp:
+    documented: true
+    detail: >-
+      Rokid's llms.txt states the UCP MCP endpoint is rate-limited per IP and
+      instructs agents to back off on 429.
+    source: https://global.rokid.com/llms.txt
+request_tracing:
+  request_id_header: not documented
+  correlation: none documented
+expansion_and_sparse_fields:
+  supported: false
+metadata_fields:
+  supported: false
+webhooks:
+  outbound: none documented
+  note: >-
+    Message delivery is push-TO-device (POST /ar/core/openapi/push/messages), not
+    a callback to the integrator. No subscription, callback URL or signature
+    scheme is documented, so there is no webhook surface to catalog.
+agent_conventions:
+  store:
+    source: https://global.rokid.com/llms.txt
+    rules:
+    - Checkout requires contemporaneous buyer approval; agents must not complete
+      payment without explicit consent.
+    - Back off on 429.
+    - Pass context.address_country and context.currency for accurate pricing.

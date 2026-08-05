@@ -1,0 +1,201 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/openapi/
+notes: >-
+  Derived from the request/response field tables in Rokid's five published
+  Sprite Enterprise OpenAPI reference pages, not from an OpenAPI document (none
+  is published). Relationships are read from id-reference fields that appear in
+  the documented payloads. Fields not documented by Rokid are not invented here.
+identifiers:
+  style: opaque strings, no type prefixes
+  device_key: deviceSn — a serial number (e.g. 1901092524001715) used as both
+    lookup key and the deviceId on message push
+  tenant_key: companyId
+  user_key: uid
+entities:
+- name: Device
+  product: core
+  operations:
+  - POST /ar/core/openapi/device/list
+  - GET /ar/core/openapi/device/detail
+  - GET /ar/core/openapi/device/realData
+  fields:
+  - deviceSn
+  - deviceName
+  - deviceType
+  - status
+  enums:
+    deviceType:
+    - GLASS3
+    - GLASS3_LITE
+    - GLASS_OTHER
+    status:
+    - online
+    - offline
+- name: DeviceTelemetry
+  product: core
+  operations:
+  - GET /ar/core/openapi/device/realData
+  fields:
+  - powerValue
+  - currentUserId
+  note: real-time snapshot, not a stored resource
+- name: Message
+  product: core
+  operations:
+  - POST /ar/core/openapi/push/messages
+  fields:
+  - deviceId
+  - businessType
+  - source
+  - title
+  - introduction
+  - body
+  direction: outbound to device (push), not a queryable resource
+- name: ChatLog
+  product: assistant
+  operations:
+  - GET /ar/assistant/openapi/chatLog/page
+  fields:
+  - id
+  - type
+  - deviceId
+  - agentId
+  - agentName
+  - modelId
+  - modelName
+  - modelApiName
+  - systemPrompt
+  - questionContent
+  - questionImg
+  - answerContent
+  - costTime
+  - status
+  - errorMsg
+  - isMemory
+  - time
+  - uid
+  - userName
+  - companyId
+  - gmtCreated
+  - gmtModified
+  - deleted
+  enums:
+    type:
+      0: chat
+      1: recognition
+- name: Meeting
+  product: corporation
+  operations:
+  - POST /ar/corporation/openapi/rtc/meeting/info/page
+  fields:
+  - id
+  - meetingId
+  - meetingName
+  - meetingDuration
+  - meetingStatus
+  - egressRecordUrl
+  - gmtCreated
+  - gmtModified
+- name: MeetingParticipant
+  product: corporation
+  operations:
+  - GET /ar/corporation/openapi/rtc/meeting/record/list
+  fields:
+  - participantUserFullName
+  - participantUserName
+  - startTime
+  - endTime
+  - meetingDuration
+  - status
+  enums:
+    status:
+    - 会议中 (in meeting)
+    - 已退出 (exited)
+    - 未进入 (not entered)
+- name: WorkTaskRecord
+  product: flow
+  operations:
+  - GET /ar/flow/openapi/record/page
+  fields:
+  - taskId
+  - taskName
+  - uid
+  - userName
+  - taskProgress
+  - reportUrl
+- name: PageEnvelope
+  kind: envelope
+  fields:
+  - pageNum
+  - pageSize
+  - total
+  - list
+  note: shared by every paged operation; see conventions/rokid-conventions.yml
+relationships:
+- from: Message
+  to: Device
+  type: belongs_to
+  via: deviceId → Device.deviceSn
+  confidence: high
+- from: ChatLog
+  to: Device
+  type: belongs_to
+  via: deviceId → Device.deviceSn
+  confidence: high
+- from: ChatLog
+  to: Agent
+  type: belongs_to
+  via: agentId / agentName
+  confidence: medium
+  note: >-
+    An Agent resource is referenced by ChatLog but is created and managed in the
+    Lingmou console UI; no Agent CRUD endpoint is published.
+- from: ChatLog
+  to: Model
+  type: belongs_to
+  via: modelId / modelName / modelApiName
+  confidence: medium
+  note: models (including openClaw, openClawVL) are registered in the console Model
+    center, not through the API
+- from: ChatLog
+  to: Company
+  type: belongs_to
+  via: companyId
+  confidence: high
+- from: ChatLog
+  to: User
+  type: belongs_to
+  via: uid / userName
+  confidence: high
+- from: Meeting
+  to: Company
+  type: belongs_to
+  via: companyId (required request parameter)
+  confidence: high
+- from: Meeting
+  to: MeetingParticipant
+  type: has_many
+  via: MeetingParticipant listed by Meeting.id
+  confidence: high
+- from: WorkTaskRecord
+  to: User
+  type: belongs_to
+  via: uid (required request parameter)
+  confidence: high
+console_only_entities:
+- name: Agent
+  managed_at: https://x-inspection.rokid.com/main/devices
+  note: created and enabled in the Lingmou cloud console; only readable
+    indirectly through ChatLog
+- name: Model
+  managed_at: Lingmou console → Model center
+  note: openClaw / openClawVL registration is a console action
+- name: ApiKey
+  managed_at: issued by Rokid sales/business after OA approval
+render: null
+gaps:
+- No create/update/delete operation is published for any entity except the
+  message push. The public API is read-mostly.
+- No schema document, so field types beyond string/int/long are inferred from
+  the reference tables' own type column only.

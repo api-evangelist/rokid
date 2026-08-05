@@ -1,0 +1,93 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/%E7%89%88%E6%9C%AC%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97.html
+notes: >-
+  Rokid versions its SDKs, not its cloud contract. The lifecycle discipline it
+  publishes is real and dated at the SDK layer and effectively absent at the API
+  layer. Every "not published" line below was probed, not assumed.
+versioning:
+  api:
+    scheme: none
+    version_in_path: false
+    version_header: false
+    detail: >-
+      /ar/<product>/openapi/<resource> carries no version segment, so there is no
+      way for a client to pin a contract version.
+  sdk:
+    scheme: semver with channel suffix — <major>.<minor>.<patch>-<E|P>
+    channels:
+      E: enterprise
+      P: production/partner
+    current_release: 2.5.1-P
+    current_snapshot: 2.6.3-P-SNAPSHOT
+    distribution: https://maven.rokid.com/repository/maven-public/
+    coordinates:
+    - com.rokid.security:glass3.open.sdk
+    - com.rokid.security:phone.sdk
+    lockstep: phone and glasses SDK ship together, paired with a recommended
+      device OTA build per release
+  policy_url: null
+change_log:
+  published: true
+  url: https://x-docs.rokid.com/docs/en/terminal-sdk/resources/%E7%89%88%E6%9C%AC%E5%8F%98%E6%9B%B4%E6%97%A5%E5%BF%97.html
+  dated: true
+  scope: terminal SDK (phone + glasses)
+  detail: changelog/rokid-changelog.yml
+  latest_documented: V2.1.9-E (2026-05-25)
+  lag: >-
+    Documented latest trails the distributed latest release (2.5.1-P) and the
+    provider's own skill package metadata (V2.2.0-E, 2026-06-05).
+deprecation:
+  policy_published: false
+  sunset_header: not implemented / not documented
+  deprecation_header: not implemented / not documented
+  rfc8594: false
+  deprecated_operations: []
+  detail: >-
+    No deprecation or sunset policy is published for either the cloud API or the
+    SDKs. The changelog records additions only — across six entries every change
+    is an API addition and no entry is marked breaking or announces a removal.
+    Superseded generations (Rokid Glass 2 / glass2-docs, RokidOS-era npm CLIs,
+    the openvoice SDKs) were simply left unpublished-to rather than formally
+    deprecated.
+status_page:
+  published: false
+  probes:
+  - url: https://status.rokid.com
+    result: DNS does not resolve
+  - url: https://rokid.statuspage.io
+    http_status: 200
+    result: >-
+      soft-404 — Atlassian marketing page, byte-identical to the control probe
+      https://zzzcontrolabc123.statuspage.io
+  - url: https://rokid.instatus.com
+    http_status: 200
+    result: soft-404 — byte-identical to the control probe on Instatus
+sla:
+  published: false
+  uptime_commitment: null
+  support_response_targets: null
+support:
+  developer_forum: https://forum.rokid.com/
+  faq: https://x-docs.rokid.com/docs/en/faq/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98.html
+  store_support: https://global.rokid.com/pages/support
+  community_repo: https://github.com/Rokid/community
+generations:
+- name: Rokid Glass3 / Sprite Enterprise
+  status: current
+  docs: https://x-docs.rokid.com/docs/en/
+  sdk: com.rokid.security:glass3.open.sdk
+- name: Rokid Glass 2
+  status: superseded
+  docs: https://rokidglass.github.io/glass2-docs/
+  repo: https://github.com/RokidGlass/glass2-docs
+- name: UXR SDK (Unity spatial)
+  status: parallel
+  docs: https://developerdoc.rokid.com/sdk
+  repo: https://github.com/RokidGlass/UXR-docs
+- name: RokidOS / YodaOS voice skills platform
+  status: legacy
+  docs: https://github.com/Rokid/docs
+  note: >-
+    Skill kit, OpenVoice ASR/TTS and Homebase tooling; npm packages last
+    published in 2022 and no formal end-of-life notice was found.

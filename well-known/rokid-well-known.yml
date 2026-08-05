@@ -1,0 +1,127 @@
+generated: '2026-08-05'
+method: probed
+source: https://global.rokid.com/.well-known/
+notes: >-
+  Probed /.well-known/* on every Rokid host found: www.rokid.com, global.rokid.com,
+  ar.rokid.com, open.rokid.com, developerdoc.rokid.com, x-docs.rokid.com,
+  api.rokid.com and openapi.rokid.com. Only the Shopify-hosted global storefront
+  (global.rokid.com) serves real well-known documents. ar./open./developerdoc./
+  x-docs.rokid.com are single-page apps that answer 200 with the SPA HTML shell
+  for EVERY path — a control probe of a nonsense path returned the identical
+  byte count, so none of their 200s are recorded as hits.
+hosts_probed:
+- host: global.rokid.com
+  soft_404: false
+  control_probe:
+    url: https://global.rokid.com/pages/zzz-control-404-abc
+    http_status: 404
+- host: www.rokid.com
+  soft_404: false
+- host: api.rokid.com
+  soft_404: false
+- host: openapi.rokid.com
+  soft_404: false
+  note: every path answers 401 application/json ("没有权限" / no permission)
+- host: x-docs.rokid.com
+  soft_404: true
+  control_probe:
+    url: https://x-docs.rokid.com/zzz-control-404-abc/
+    http_status: 200
+    bytes: 382436
+- host: ar.rokid.com
+  soft_404: true
+- host: open.rokid.com
+  soft_404: true
+- host: developerdoc.rokid.com
+  soft_404: true
+  note: developer.rokid.com 302s here, which 302s to open.rokid.com
+well_known:
+- path: /.well-known/ucp
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/ucp
+  status: 200
+  content_type: application/json
+  file: well-known/rokid-ucp.json
+  description: >-
+    Universal Commerce Protocol merchant profile — UCP 2026-04-08 and 2026-01-23,
+    MCP transport endpoint, shopping capabilities (cart, checkout, fulfillment,
+    discount, order, catalog search/lookup) and payment handlers (Google Pay,
+    Shopify card).
+- path: /.well-known/openid-configuration
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/openid-configuration
+  status: 200
+  content_type: application/json
+  file: well-known/rokid-openid-configuration.json
+  description: >-
+    OIDC discovery for the storefront's Shopify Customer Accounts issuer
+    (https://shopify.com/authentication/62856364211). Not the Rokid enterprise
+    OpenAPI, which uses a bearer API key instead.
+- path: /.well-known/oauth-authorization-server
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/oauth-authorization-server
+  status: 200
+  content_type: application/json
+  file: well-known/rokid-oauth-authorization-server.json
+  description: RFC 8414 metadata, byte-identical to the OIDC discovery document.
+- path: /.well-known/security.txt
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/security.txt
+  status: 404
+  file: null
+- path: /.well-known/security.txt
+  host: www.rokid.com
+  url: https://www.rokid.com/.well-known/security.txt
+  status: 404
+  file: null
+  note: 302 to the localized site, then 404
+- path: /.well-known/security.txt
+  host: api.rokid.com
+  url: https://api.rokid.com/.well-known/security.txt
+  status: 404
+  file: null
+- path: /.well-known/agent-card.json
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/agent-card.json
+  status: 404
+  file: null
+- path: /.well-known/agent.json
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/agent.json
+  status: 404
+  file: null
+- path: /.well-known/agent-card.json
+  host: api.rokid.com
+  url: https://api.rokid.com/.well-known/agent-card.json
+  status: 404
+  file: null
+- path: /.well-known/agent.json
+  host: api.rokid.com
+  url: https://api.rokid.com/.well-known/agent.json
+  status: 404
+  file: null
+- path: /.well-known/api-catalog
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/api-catalog
+  status: 404
+  file: null
+- path: /.well-known/ai-plugin.json
+  host: global.rokid.com
+  url: https://global.rokid.com/.well-known/ai-plugin.json
+  status: 404
+  file: null
+agent_documents:
+- path: /llms.txt
+  host: global.rokid.com
+  url: https://global.rokid.com/llms.txt
+  status: 200
+  content_type: text/markdown
+  file: llms/rokid-llms.txt
+- path: /agents.md
+  host: global.rokid.com
+  url: https://global.rokid.com/agents.md
+  status: 200
+  content_type: text/markdown
+  note: >-
+    Canonical twin of /llms.txt — the two differ by a single sentence, each
+    naming the other as the mirror. Not stored separately.

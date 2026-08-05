@@ -1,0 +1,64 @@
+generated: '2026-08-05'
+method: searched
+source: https://www.npmjs.com/package/rokidos-cli
+notes: >-
+  Rokid ships first-party command-line tooling for its device platforms, but
+  every published CLI belongs to the earlier RokidOS / YodaOS / Homebase era and
+  has not been republished since 2022. There is NO CLI for the current Glass3
+  Enterprise cloud OpenAPI (api.rokid.com) — that surface is REST-only.
+clis:
+- name: rokidos-cli
+  binary: rokidos
+  official: true
+  install:
+  - npm install -g rokidos-cli
+  version: 0.10.2
+  last_published: '2022-05-16'
+  status: legacy
+  repository: https://github.com/Rokid/rokidos-cli
+  description: Development command-line tool for ROL (Rokid Open Linux).
+  command_groups:
+  - config
+  - install
+  - build
+  - test
+- name: rokid-homebase-cli
+  official: true
+  install:
+  - npm install -g rokid-homebase-cli
+  version: 2.0.7
+  last_published: '2022-06-26'
+  status: legacy
+  repository: https://github.com/Rokid/rokid-homebase-cli
+  description: Command-line tool for developing Rokid Homebase smart-home drivers.
+- name: rokid-linux-cli
+  official: true
+  install:
+  - npm install -g rokid-linux-cli
+  version: 0.1.0
+  last_published: '2022-05-16'
+  status: legacy
+  description: Earlier published name of the ROL development CLI.
+- name: create-aiui-agent
+  official: unverified
+  install:
+  - npm create @yodaos-pkg/aiui-agent
+  version: 2.1.3
+  last_published: '2026-07-15'
+  status: active
+  description: Scaffolds a new AIUI Agent project from a built-in template.
+  note: '@yodaos-pkg scope; first-party attribution unverified — see packages/rokid-packages.yml'
+related_tooling:
+- name: vscode-plugin-rokidos
+  kind: editor extension
+  repository: https://github.com/Rokid/vscode-plugin-rokidos
+  description: Visual Studio Code plugin for Rokid skill development.
+  status: legacy
+- name: rokid-skill-tools
+  kind: shell tooling
+  repository: https://github.com/Rokid/rokid-skill-tools
+  status: legacy
+not_found:
+  cloud_openapi_cli: >-
+    No CLI is documented anywhere in the Rokid Sprite Enterprise docs for the
+    api.rokid.com OpenAPI; the reference shows raw curl examples only.

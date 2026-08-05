@@ -1,23 +1,152 @@
 aid: rokid
 name: Rokid
-description: 'Rokid is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Rokid is a Chinese AR and AI wearables company that designs smart glasses and
+  the operating system that runs on them. Its consumer line spans Rokid Glasses,
+  Rokid AI Glasses Style, Rokid AR Spatial and Rokid Max 2, and its enterprise
+  line is Rokid Glass3 / Sprite, backed by the YodaOS and YodaOS-Sprite operating
+  systems. Rokid exposes three distinct developer surfaces. The Sprite Enterprise
+  cloud OpenAPI at api.rokid.com covers device management, message push to
+  glasses, AI agent chat logs, RTC remote-collaboration meeting history and AI
+  work-assistant task records, authenticated with a bearer API key issued by
+  sales. Terminal SDKs for the glasses and the companion phone are distributed
+  from Rokid's own Maven repository at maven.rokid.com, with a dated release
+  changelog and a provider-published Agent Skill package for AI coding tools.
+  Separately, the global storefront implements the Universal Commerce Protocol
+  with a live MCP endpoint, an llms.txt and an agents.md for buying agents.
+image: https://static.rokidcdn.com/web_assets/site/og-image.jpg
 url: https://raw.githubusercontent.com/api-evangelist/rokid/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
-- Company
-apis: []
+- Smart Glasses
+- Augmented Reality
+- Wearables
+- Artificial Intelligence
+- Spatial Computing
+- Device Management
+- Consumer Electronics
+- Voice
+- Enterprise
+- Hardware
+- Agents
+apis:
+- name: Rokid Sprite Enterprise OpenAPI
+  description: >-
+    The Rokid Glass3 / Sprite Enterprise cloud API. Device registration lookup
+    and real-time telemetry, message push to glasses, paged AI agent chat logs,
+    RTC remote-collaboration meeting history and participant records, and AI
+    work-assistant task records. Bearer API key authentication; no OpenAPI
+    document is published.
+  humanURL: https://x-docs.rokid.com/docs/en/openapi/ApiKey.html
+  baseURL: https://api.rokid.com
+  tags:
+  - Device Management
+  - Messaging
+  - Artificial Intelligence
+  - Remote Collaboration
+  - Enterprise
+  properties:
+  - type: Documentation
+    url: https://x-docs.rokid.com/docs/en/openapi/ApiKey.html
+  - type: APIReference
+    url: https://x-docs.rokid.com/docs/en/openapi/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86.html
+  - type: Authentication
+    url: authentication/rokid-authentication.yml
+  - type: ErrorCatalog
+    url: errors/rokid-error-codes.yml
+  - type: DataModel
+    url: data-model/rokid-data-model.yml
+  - type: Conventions
+    url: conventions/rokid-conventions.yml
+- name: Rokid Store Agent Commerce API
+  description: >-
+    Rokid's global storefront implements the Universal Commerce Protocol for
+    agent-driven commerce, with a UCP merchant profile at /.well-known/ucp and a
+    live MCP endpoint exposing catalog search, cart, checkout and fulfillment to
+    buying agents. Checkout requires contemporaneous buyer approval.
+  humanURL: https://global.rokid.com/llms.txt
+  baseURL: https://global.rokid.com/api/ucp/mcp
+  tags:
+  - Commerce
+  - Agents
+  - Model Context Protocol
+  properties:
+  - type: MCPServer
+    url: mcp/rokid-mcp.yml
+  - type: LLMsTxt
+    url: llms/rokid-llms.txt
+  - type: WellKnown
+    url: well-known/rokid-well-known.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: DomainSecurity
+  url: security/rokid-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/rokid_stock/
+  url: https://www.rokid.com/
+- type: DeveloperPortal
+  url: https://open.rokid.com/
+- type: Documentation
+  url: https://x-docs.rokid.com/docs/en/
+- type: APIReference
+  url: https://x-docs.rokid.com/docs/en/openapi/ApiKey.html
+- type: GettingStarted
+  url: https://x-docs.rokid.com/docs/en/terminal-sdk/getting-started/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.html
+- type: Support
+  url: https://forum.rokid.com/
+- type: HelpCenter
+  url: https://global.rokid.com/pages/support
+- type: Blog
+  url: https://global.rokid.com/blogs/news
+- type: GitHubOrganization
+  url: https://github.com/Rokid
+- type: Login
+  url: https://global.rokid.com/account/login
+- type: Pricing
+  url: https://global.rokid.com/collections/all
+- type: TermsOfService
+  url: https://global.rokid.com/policies/terms-of-service
+- type: PrivacyPolicy
+  url: https://global.rokid.com/policies/privacy-policy
+- type: Authentication
+  url: authentication/rokid-authentication.yml
+- type: ErrorCatalog
+  url: errors/rokid-error-codes.yml
+- type: Conventions
+  url: conventions/rokid-conventions.yml
+- type: DataModel
+  url: data-model/rokid-data-model.yml
+- type: Lifecycle
+  url: lifecycle/rokid-lifecycle.yml
+- type: ChangeLog
+  url: changelog/rokid-changelog.yml
+- type: Conformance
+  url: conformance/rokid-conformance.yml
+- type: Packages
+  url: packages/rokid-packages.yml
+- type: SDKs
+  url: packages/rokid-packages.yml
+- type: CLI
+  url: cli/rokid-cli.yml
+- type: Protobuf
+  url: grpc/rokid-protobuf.yml
+- type: WellKnown
+  url: well-known/rokid-well-known.yml
+- type: LLMsTxt
+  url: llms/rokid-llms.txt
+- type: MCPServer
+  url: mcp/rokid-mcp.yml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-05'
+  status: enriched
+  artifacts_added: 23
+  pass: local-v1

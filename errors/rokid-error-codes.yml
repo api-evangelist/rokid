@@ -1,0 +1,89 @@
+generated: '2026-08-05'
+method: searched
+source: https://x-docs.rokid.com/docs/en/openapi/
+notes: >-
+  Rokid publishes NO error-code reference for the Sprite Enterprise OpenAPI. The
+  envelope below was read from the sample responses in the provider's own device,
+  message, agent, remote-collaboration and AI-work-assistant reference pages, and
+  the one concrete failure code was captured from a live unauthenticated probe.
+  This catalog is deliberately short: it records only codes that were actually
+  observed or published. Do not read absence here as absence in the API.
+format: proprietary-envelope
+rfc9457: false
+problem_json_content_type: false
+envelope:
+  content_type: '*/*'
+  http_status_on_error: 200
+  fields:
+  - name: code
+    type: integer
+    description: 0 on success; a non-zero integer identifies the failure.
+  - name: message
+    type: string
+    description: Human-readable status text. Localized Chinese strings are returned
+      on some failures even from the English documentation surface.
+  - name: data
+    type: object|array|string|null
+    description: Payload on success.
+  - name: success
+    type: boolean
+    description: The authoritative success flag. Clients must branch on this rather
+      than on the HTTP status.
+  note: >-
+    The API answers HTTP 200 for at least some authentication failures, so HTTP
+    status alone is not a reliable error signal.
+codes:
+- code: 0
+  message: OK
+  success: true
+  meaning: Request succeeded.
+  method: searched
+  source: https://x-docs.rokid.com/docs/en/openapi/%E8%AE%BE%E5%A4%87%E7%AE%A1%E7%90%86.html
+- code: 50001
+  message: Authorization 不能为空
+  message_en: Authorization must not be empty
+  success: false
+  http_status_observed: 200
+  meaning: The Authorization header was absent from the request.
+  remediation: >-
+    Send `Authorization: Bearer <API_KEY>` on every request. See
+    authentication/rokid-authentication.yml.
+  method: probed
+  source: https://api.rokid.com/ar/core/openapi/device/list
+  x-evidence:
+    fetched: '2026-08-05'
+    url: https://api.rokid.com/ar/core/openapi/device/list
+    method: POST
+    http_status: 200
+    body: '{"code":50001,"message":"Authorization 不能为空","success":false}'
+related_error_surfaces:
+- name: Rokid Store UCP MCP (JSON-RPC)
+  transport: JSON-RPC 2.0 over HTTP
+  endpoint: https://global.rokid.com/api/ucp/mcp
+  codes:
+  - code: -32001
+    message: UCP discovery failed
+    data_code: invalid_profile_url
+    data_content: 'Unable to fetch agent profile: Missing profile uri'
+    http_status_observed: 422
+    meaning: The calling agent did not present a resolvable UCP agent-profile URI.
+    method: probed
+    source: https://global.rokid.com/api/ucp/mcp
+- name: openapi.rokid.com gateway
+  codes:
+  - status: 401
+    error: Unauthorized
+    message: 没有权限 (no permission)
+    shape: '{"timestamp":"...","status":401,"error":"Unauthorized","message":"..."}'
+    meaning: Every path on this host is refused anonymously, including well-known
+      paths.
+    method: probed
+    source: https://openapi.rokid.com/
+gaps:
+- >-
+  No published error-code registry: the five OpenAPI reference pages document
+  request and response fields but never enumerate the non-zero `code` values or
+  what a caller should do about them.
+- >-
+  No RFC 9457 problem+json. No `Retry-After`, no documented rate-limit response
+  code for the enterprise API.
