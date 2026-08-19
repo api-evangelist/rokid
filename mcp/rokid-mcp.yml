@@ -2,12 +2,10 @@ generated: '2026-08-05'
 method: searched
 source: https://global.rokid.com/llms.txt
 status: live
-notes: >-
-  Rokid runs a real, publicly addressable MCP server on its own host as part of
-  the Universal Commerce Protocol (UCP) implementation on its global storefront.
-  It is a COMMERCE MCP server, not a developer-platform one — it exposes the
-  Rokid store catalog, cart and checkout to buying agents. Rokid's enterprise
-  developer platform (api.rokid.com) has no MCP surface.
+notes: Rokid runs a real, publicly addressable MCP server on its own host as part of the Universal Commerce
+  Protocol (UCP) implementation on its global storefront. It is a COMMERCE MCP server, not a developer-platform
+  one — it exposes the Rokid store catalog, cart and checkout to buying agents. Rokid's enterprise developer
+  platform (api.rokid.com) has no MCP surface.
 servers:
 - name: Rokid Store — UCP Shopping MCP
   url: https://global.rokid.com/api/ucp/mcp
@@ -15,12 +13,10 @@ servers:
   transport: streamable-http
   protocol: mcp
   hosted_by: Shopify (UCP native)
-  auth: >-
-    Anonymous JSON-RPC POST is accepted but a UCP agent profile URI is required
-    before any method executes. tools/list and initialize both returned HTTP 422
-    with JSON-RPC error -32001 "UCP discovery failed" / code invalid_profile_url
-    / "Unable to fetch agent profile: Missing profile uri". The live inputSchema
-    set is therefore gated behind agent-profile registration.
+  auth: 'Anonymous JSON-RPC POST is accepted but a UCP agent profile URI is required before any method
+    executes. tools/list and initialize both returned HTTP 422 with JSON-RPC error -32001 "UCP discovery
+    failed" / code invalid_profile_url / "Unable to fetch agent profile: Missing profile uri". The live
+    inputSchema set is therefore gated behind agent-profile registration.'
   discovery: https://global.rokid.com/.well-known/ucp
   ucp_versions:
   - '2026-04-08'
@@ -50,11 +46,9 @@ servers:
   tools:
     method: searched
     source: https://global.rokid.com/llms.txt
-    note: >-
-      Names below are published by Rokid in its own llms.txt / agents.md agent
-      flow. Input schemas were NOT retrieved — the live tools/list is gated (422
-      above) — and are not reproduced here. Authoritative schemas live in the
-      UCP shopping OpenRPC document referenced above.
+    note: Names below are published by Rokid in its own llms.txt / agents.md agent flow. Input schemas
+      were NOT retrieved — the live tools/list is gated (422 above) — and are not reproduced here. Authoritative
+      schemas live in the UCP shopping OpenRPC document referenced above.
     list:
     - name: search_catalog
       capability: dev.ucp.shopping.catalog.search
@@ -84,18 +78,23 @@ servers:
   - com.google.pay
   - dev.shopify.card
   agent_rules_published_by_provider:
-  - Checkout requires contemporaneous human approval; agents must not complete
-    payment without explicit buyer consent.
+  - Checkout requires contemporaneous human approval; agents must not complete payment without explicit
+    buyer consent.
   - The MCP endpoint is rate-limited per IP; back off on 429.
   - Pass context.address_country and context.currency for accurate pricing.
 not_found:
 - surface: developer-platform MCP server
-  note: >-
-    No MCP endpoint is documented or discoverable for the Rokid Sprite
-    Enterprise OpenAPI (api.rokid.com). The docs' only agent-integration page
-    ("Integrate OpenClaw") describes a LAN-local OpenAI-compatible REST adapter
-    at http://<LAN_IP>:18789/v1/chat/completions on the glasses, not an MCP
-    server.
+  note: No MCP endpoint is documented or discoverable for the Rokid Sprite Enterprise OpenAPI (api.rokid.com).
+    The docs' only agent-integration page ("Integrate OpenClaw") describes a LAN-local OpenAI-compatible
+    REST adapter at http://<LAN_IP>:18789/v1/chat/completions on the glasses, not an MCP server.
   evidence:
   - url: https://x-docs.rokid.com/docs/en/openapi/%E6%8E%A5%E5%85%A5OpenClaw.html
     http_status: 200
+deployment:
+  mode: remote
+  endpoint: https://global.rokid.com/api/ucp/mcp
+  verified: probed
+  probe: live
+  tools: 13
+  checked: '2026-08-12'
+  source: catalog MCP census
