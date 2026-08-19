@@ -18,7 +18,7 @@ image: https://static.rokidcdn.com/web_assets/site/og-image.jpg
 url: https://raw.githubusercontent.com/api-evangelist/rokid/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:secondary-market
-specificationVersion: '0.20'
+specificationVersion: '0.23'
 created: '2026-08-05'
 modified: '2026-08-05'
 tags:
