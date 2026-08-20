@@ -73,6 +73,10 @@ apis:
   tags:
   - Commerce
   - Agents
+  - MCP
+  tags_raw:
+  - Commerce
+  - Agents
   - Model Context Protocol
   properties:
   - type: MCPServer
