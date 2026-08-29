@@ -14,6 +14,17 @@ description: >-
   changelog and a provider-published Agent Skill package for AI coding tools.
   Separately, the global storefront implements the Universal Commerce Protocol
   with a live MCP endpoint, an llms.txt and an agents.md for buying agents.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://static.rokidcdn.com/web_assets/site/og-image.jpg
 url: https://raw.githubusercontent.com/api-evangelist/rokid/refs/heads/main/apis.yml
 x-type: company
