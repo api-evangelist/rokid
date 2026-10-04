@@ -109,6 +109,9 @@ apis:
     url: llms/rokid-llms.txt
   - type: WellKnown
     url: well-known/rokid-well-known.yml
+  x-surface: platform-generated
+  x-platform: shopify
+  x-platform-surface: ucp
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
