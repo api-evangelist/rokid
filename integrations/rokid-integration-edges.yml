@@ -36,6 +36,40 @@ edges:
       P856 not contradicting (Kin 2026-10-20 decision 2)
   detected_by: sweep-apple-mfi-ecosystem.py
   first_seen: '2026-10-21'
+- partner_name: Home Assistant Community Store (HACS)
+  partner: null
+  partner_match: register
+  type: marketplace
+  marketplace: HACS default repository
+  evidence: https://github.com/jihao/rokid-webhook-hass
+  category: home-automation
+  contract_reference:
+    register: HACS default integration list (github.com/hacs/default, pinned commit) + HA analytics custom_integrations.json
+    standard: Home Assistant custom integration (HACS)
+    spec_file: null
+    role: hacs-community-integration
+    register_id: https://raw.githubusercontent.com/hacs/default/dee7a0eddd9644e8373be114cdb7818443014ba0/integration
+    pinned_commit: dee7a0eddd9644e8373be114cdb7818443014ba0
+    matched_by: domain
+    match_note: manifest documentation rokid.com, name 'rokid webhook'
+    integrations:
+    - domain: rokid_webhook
+      name: rokid webhook
+      repo: https://github.com/jihao/rokid-webhook-hass
+      builder: jihao
+      installs: 5
+      installs_band: <10
+    max_installs: 5
+    installs_source: https://analytics.home-assistant.io/custom_integrations.json
+    signal_note: installs = HA's opt-in analytics count for the integration's domain on the read date (a floor,
+      opt-in only); per-integration context, never summed or counted as edges
+    detected_by: sweep-home-assistant-hacs-custom.py
+    detected: '2026-10-22'
+  detected_by: sweep-home-assistant-hacs-custom.py
+  first_seen: '2026-10-22'
+  channel: partner-built
+  relationship: connector-coverage
+  direction: partner-built
 generated: '2026-10-21'
 method: searched
 source:
@@ -46,3 +80,5 @@ checked:
 - https://csa-iot.org/csa-iot_products/
 - https://mfi.apple.com/en/account/accessory-search
 - https://partnernetwork.apple.com/
+- https://analytics.home-assistant.io/custom_integrations.json
+- https://raw.githubusercontent.com/hacs/default/dee7a0eddd9644e8373be114cdb7818443014ba0/integration
