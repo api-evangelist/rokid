@@ -64,5 +64,102 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Rokid is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://forgeglobal.com/rokid_stock/
+Rokid is a Chinese AR and AI wearables company that designs smart glasses and the operating system that runs on them. Its consumer line spans Rokid Glasses, Rokid AI Glasses Style, Rokid AR Spatial and Rokid Max 2, and its enterprise line is Rokid Glass3 / Sprite, backed by the YodaOS and YodaOS-Sprite operating systems. Rokid exposes three distinct developer surfaces. The Sprite Enterprise cloud OpenAPI at api.rokid.com covers device management, message push to glasses, AI agent chat logs, RTC remote-collaboration meeting history and AI work-assistant task records, authenticated with a bearer API key issued by sales. Terminal SDKs for the glasses and the companion phone are distributed from Rokid's own Maven repository at maven.rokid.com, with a dated release changelog and a provider-published Agent Skill package for AI coding tools. Separately, the global storefront implements the Universal Commerce Protocol with a live MCP endpoint, an llms.txt and an agents.md for buying agents.
+
+**Areas:** Smart Glasses · Augmented Reality · Wearables · Artificial Intelligence · Spatial Computing · Device Management · Consumer Electronics · Voice · Enterprise · Hardware · Agents
+
+## Rokid on APIs.io
+
+Everything profiled for Rokid is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/rokid/](https://apis.io/providers/rokid/)** — or go straight to one of the APIs or properties below.
+
+### APIs (2)
+
+- [Rokid Sprite Enterprise OpenAPI](https://apis.io/apis/rokid/rokid-sprite-enterprise-openapi/) — The Rokid Glass3 / Sprite Enterprise cloud API. Device registration lookup and real-time telemetry, message push to glasses, paged AI agent chat logs, RTC…
+- [Rokid Store Agent Commerce API](https://apis.io/apis/rokid/rokid-store-agent-commerce-api/) — Rokid's global storefront implements the Universal Commerce Protocol for agent-driven commerce, with a UCP merchant profile at /.well-known/ucp and a live…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [rokid-mcp.yml](https://apis.io/servers/rokid/rokid-mcp-yml/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Rokid Authentication](https://apis.io/security/rokid/rokid-authentication/)
+- [Rokid Domain Security](https://apis.io/security/rokid/rokid-domain-security/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.rokid.com/)
+- [Documentation](https://x-docs.rokid.com/docs/en/)
+- [Getting started](https://x-docs.rokid.com/docs/en/terminal-sdk/getting-started/%E5%BF%AB%E9%80%9F%E5%BC%80%E5%A7%8B.html)
+- [API reference](https://x-docs.rokid.com/docs/en/openapi/ApiKey.html)
+- [Pricing](https://global.rokid.com/collections/all)
+- [Support](https://forum.rokid.com/)
+- [Blog](https://global.rokid.com/blogs/news)
+- [Terms of service](https://global.rokid.com/policies/terms-of-service)
+- [Privacy policy](https://global.rokid.com/policies/privacy-policy)
+- [GitHub](https://github.com/Rokid)
+
+## API Evangelist rating
+
+**Kin Score 42.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 75.0 |
+| Contract quality | 24.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 18.4 |
+| Developer ergonomics | 78.6 |
+| Access clarity | 38.2 |
+
+**Agent readiness 25.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | platform (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | — |
+| Agent Skills | yes |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | platform (partial credit) |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 22.7** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/rokid/](https://apis.io/providers/rokid/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Rokid: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/rokid/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
